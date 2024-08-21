@@ -130,6 +130,8 @@ class ChristieParser( HTMLParser ):
 #parser = ChristieParser()
 #parser.feed(src)
 
+# Image regex: "image_url":"(.+mode=max)"
+
 def doAuction2(auction_url, outputFile):
     lotExpr = re.compile('"url"[:]"([^"]+)","is_auction_over":false,"is_in_progress":false,"title_primary_txt"[:]"([^"]+)"', flags=re.MULTILINE)
 
