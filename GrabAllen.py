@@ -8,10 +8,12 @@ from html.parser import HTMLParser
 
 # elem = '<a class="chr-lot-tile__link" href="/s/firsts-history-computing-paul-g-allen-collection/tates-arithmometer-101/230039?ldp_breadcrumb=back">A TATE\'S ARITHMOMETER</a>'
 
-os.chdir("D:\\Notes\\History\\Allen")
+os.chdir("C:\\Temp")
 
 def process_images(f, imgRegex, lot_text, lot_key=None):
     imgFileExpr = re.compile('.+[/]([^?]+)')
+    if (not os.path.exists("images")):
+        os.mkdir("images")
 
     f.write("<h2>Images:</h2>\n")
     f.write("<p>\n")
@@ -28,14 +30,14 @@ def process_images(f, imgRegex, lot_text, lot_key=None):
         m = re.search(imgFileExpr, img_url)
         if (m):
             img_path = m.group(1)
-        if (not (img_path and os.path.exists(img_path))):  # Don't get the file if we already have it.
+        if (not (img_path and os.path.exists("images" + os.sep + img_path))):  # Don't get the file if we already have it.
             img_data = requests.get(img_url)
             if (img_data.status_code != 200):
                 print("error getting image %s: %d" % (img_url, img_data.status_code))
             else:
-                open(img_path, 'wb').write(img_data.content)
+                open("images" + os.sep + img_path, 'wb').write(img_data.content)
 
-        f.write('<a href="./' + img_path + '">Image %d</a>\n' % img_count)
+        f.write('<a href="./images/' + img_path + '">Image %d</a>\n' % img_count)
         img_count += 1
     f.write("</p>\n")
 
@@ -75,9 +77,10 @@ def doAuction1(auction_url, outputFile):
                 if (m):
                     lot_key = m.group(1)
                 process_images(f, imgExpr, lotData.text, lot_key)
+                f.write('<hr>\n')
         f.close()
                             
-# doAuction1("https://onlineonly.christies.com/s/firsts-history-computing-paul-g-allen-collection/lots/3726?COSID=&cid=sh_hub&bid=", "AllenStuff1.html")
+doAuction1("https://onlineonly.christies.com/s/firsts-history-computing-paul-g-allen-collection/lots/3726?COSID=&cid=sh_hub&bid=", "AllenStuff1.html")
 
 # "url":"https://www.christies.com/en/lot/lot-6495034?ldp_breadcrumb=back",
 # "is_auction_over":false,"is_in_progress":false,"title_primary_txt":"AN IBM SYSTEM 360 MODEL 91"
@@ -159,4 +162,4 @@ def doAuction2(auction_url, outputFile):
         f.close()
 
 
-doAuction2("https://www.christies.com/en/auction/pushing-boundaries-ingenuity-from-the-paul-g-allen-collection-30730/browse-lots", "AllenStuff2.html")
+# doAuction2("https://www.christies.com/en/auction/pushing-boundaries-ingenuity-from-the-paul-g-allen-collection-30730/browse-lots", "AllenStuff2.html")
