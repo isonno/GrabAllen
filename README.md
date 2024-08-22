@@ -1,15 +1,16 @@
-# GrabAllen - Download the Paul Allen auction Photos from Christies
+# GrabAllen
+## Download the Paul Allen auction Photos from Christies
 
-In August 2024, Christies auction host [posted auctions of Paul Allen's collections](https://www.christies.com/en/stories/gen-one-innovations-from-the-paul-g-allen-collection-1f0df60a726e4dcbabef3a91a57ef7ee)
+In August 2024, the Christies auction house [posted auctions of Paul Allen's collection](https://www.christies.com/en/stories/gen-one-innovations-from-the-paul-g-allen-collection-1f0df60a726e4dcbabef3a91a57ef7ee)
 of technology, history and science fiction memorabila. Along with the listings
 are great, high-res color photos of his collection.
 
-Many of the items in this collection were displayed at the Living Computer Museum,
+Many of the items in this collection were displayed at the Living Computer Museum in Seattle,
 which shut down for good in 2020. As [Jason Scott explains](https://ascii.textfiles.com/archives/5672), the LCM wasn't really
 a "museum", it was just Paul letting people look at his cool collection of toys.
 
 When Allen died in 2018, there was no plan in place to independently sustain the LCM,
-hence its closure and the auction of the major artifacts it displayed.
+hence its eventual closure and the auction of the major artifacts it displayed.
 
 Now, Christie's is no more a "museum" than the LCM was, and the excellent photos they
 took for the auction are irrelevant to them once the sales commission checks are cashed. Hence
