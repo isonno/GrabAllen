@@ -14,7 +14,8 @@ hence its eventual closure and the auction of the major artifacts it displayed.
 
 Now, Christie's is no more a "museum" than the LCM was, and the excellent photos they
 took for the auction are irrelevant to them once the sales commission checks are cashed. Hence
-this script to grab the photos before they go away.
+this script to grab the photos before they go away. **Note:** Before running this script, edit
+the line near the top calling `os.chdir` to specify where you want the files downloaded to.
 
 Would this script work for other Christies auction listings? Maybe? Could Christies get upset
 and make grabbing this info much harder by applying DRM or encription? Certainly. The code is a
