@@ -80,6 +80,8 @@ def grabOnlineAuction(auction_url, outputFile):
                 write_attr(f, "Description", descExper, lotData.text)
                 write_attr(f, "Provenance", provExper, lotData.text)
 
+                # Keep track of the lot key, so we only download images
+                # related to this lot. Otherwise it finds promo images for other lots.
                 m = re.search(lotKeyExpr, lot[0])
                 lot_key = None
                 if (m):
