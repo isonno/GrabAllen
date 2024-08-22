@@ -6,7 +6,7 @@ import requests, re, os
 from html.parser import HTMLParser
 
 # Change this line to determine where you want the download to happen.
-os.chdir("D:\\Notes\\History\\Allen")
+os.chdir("/Notes/Allen")
 
 # Dump all the images with URLs matching imgRexex in lot_text
 # to the images folder. HTML links to the images are appended to 'f'.
@@ -97,6 +97,7 @@ class ChristieParser( HTMLParser ):
         self.first_img_url = None
         self.in_section = None
         self.in_span = False
+        self.in_header = False
         self.section_data = {}
         HTMLParser.__init__(self)
 
@@ -108,7 +109,7 @@ class ChristieParser( HTMLParser ):
         if is_tag_combo('img', 'class', 'chr-img lazyload'):
             self.first_img_url = attrs['src']
         if is_tag_combo('div', 'slot', 'header'):
-            self.find_header = True
+            self.in_header = True
         if is_tag_combo('span', 'class', 'chr-lot-section__accordion--text'):
             self.in_span = True
 
@@ -121,10 +122,8 @@ class ChristieParser( HTMLParser ):
                 self.section_data[self.in_section] += data
             else:
                 self.section_data[self.in_section] = data
-        if data == "Details":
-            self.in_section = "Details"
-        if data == "Provenance":
-            self.in_section = "Provenance"
+        if self.in_header and (data in ["Details", "Provenance"]):
+            self.in_section = data
         
     def handle_endtag(self, tag: str):
         if (tag in ['br', 'b', 'i', 'p'] and self.in_section):
@@ -133,6 +132,7 @@ class ChristieParser( HTMLParser ):
         if self.in_span and tag=="span" and self.in_section:
             self.in_span = False
             self.in_section = None
+            self.in_header = False
 
 # Christie's live auctions are regular HTML
 def grabLiveAuction(auction_url, outputFile):
