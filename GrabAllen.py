@@ -1,15 +1,16 @@
-# Grab Paul Allen stuff
+# Grab the contents of the Paul Allen Auctions at Christies, August 2024
+# Requires the requests package, which is not standard ("pip install requests")
+# J. Peterson
 
 import requests, re, os
 from html.parser import HTMLParser
 
-#    parser = AllenParser()
-#    parser.feed(r.text)
+# Change this line to determine where you want the download to happen.
+os.chdir("D:\\Notes\\History\\Allen")
 
-# elem = '<a class="chr-lot-tile__link" href="/s/firsts-history-computing-paul-g-allen-collection/tates-arithmometer-101/230039?ldp_breadcrumb=back">A TATE\'S ARITHMOMETER</a>'
-
-os.chdir("C:\\Temp")
-
+# Dump all the images with URLs matching imgRexex in lot_text
+# to the images folder. HTML links to the images are appended to 'f'.
+# lot_key is used to restrict images written to a particular lot
 def process_images(f, imgRegex, lot_text, lot_key=None):
     imgFileExpr = re.compile('.+[/]([^?]+)')
     if (not os.path.exists("images")):
@@ -41,12 +42,14 @@ def process_images(f, imgRegex, lot_text, lot_key=None):
         img_count += 1
     f.write("</p>\n")
 
-
-def doAuction1(auction_url, outputFile):
+# The web page describing the lots comes in two flavors; the online copy
+# stores the lots as a JSON blob that's inflated on display. This fishes
+# the info out of the JSON.
+def grabOnlineAuction(auction_url, outputFile):
     baseURL = 'https://onlineonly.christies.com/'
     lotExpr = re.compile('"url"[:]"([^"]+)","title_primary_txt"[:]"([^"]+)"', flags=re.MULTILINE)
     imgExpr = re.compile('"image_url":"([^"]+)"', flags=re.MULTILINE)
-    descExper = re.compile('"description_txt"[:]"(.+deep)"', flags=re.MULTILINE) # Using 'deep' as a delimiter is such a hack
+    descExper = re.compile('"description_txt"[:]"((\\.|[^"])*)"', flags=re.MULTILINE)
     provExper = re.compile('"Provenance","content":"([^"]+)"', flags=re.MULTILINE)
     lotKeyExpr = re.compile('.+[/][^?]+-(\d+)') # Just grabs the lot number
 
@@ -58,11 +61,16 @@ def doAuction1(auction_url, outputFile):
 
     auction = requests.get(auction_url)
     if (auction.status_code != 200):
-        print("error: %d" % auction.status_code)
+        print("Online auction error: %d" % auction.status_code)
     else:
         f = open(outputFile, 'w', encoding='utf-8')
         lotInfo = re.findall(lotExpr, auction.text)
+        firstLot = lotInfo[0]
+        start = True
         for lot in lotInfo:
+            if not start and lot[0] == firstLot[0]:   # Two copies of the lot DB are included,
+                break                                 # bail after processing the first one.
+            start = False                 
             print("Processing: " + lot[1])
             f.write("<h2>" + lot[1] + "</h2>\n")
             lotData = requests.get(baseURL + lot[0])
@@ -78,13 +86,11 @@ def doAuction1(auction_url, outputFile):
                     lot_key = m.group(1)
                 process_images(f, imgExpr, lotData.text, lot_key)
                 f.write('<hr>\n')
+            
         f.close()
-                            
-doAuction1("https://onlineonly.christies.com/s/firsts-history-computing-paul-g-allen-collection/lots/3726?COSID=&cid=sh_hub&bid=", "AllenStuff1.html")
 
-# "url":"https://www.christies.com/en/lot/lot-6495034?ldp_breadcrumb=back",
-# "is_auction_over":false,"is_in_progress":false,"title_primary_txt":"AN IBM SYSTEM 360 MODEL 91"
-
+# The "regular" Christie's lots are regular HTML, and the info
+# can be parsed out of it.
 
 class ChristieParser( HTMLParser ):
     def __init__(self):
@@ -128,15 +134,10 @@ class ChristieParser( HTMLParser ):
             self.in_span = False
             self.in_section = None
 
-
-
-#parser = ChristieParser()
-#parser.feed(src)
-
-# Image regex: "image_url":"(.+mode=max)"
-
-def doAuction2(auction_url, outputFile):
+# Christie's live auctions are regular HTML
+def grabLiveAuction(auction_url, outputFile):
     lotExpr = re.compile('"url"[:]"([^"]+)","is_auction_over":false,"is_in_progress":false,"title_primary_txt"[:]"([^"]+)"', flags=re.MULTILINE)
+    imgExpr = re.compile('"image_url":"([^"]+)"', flags=re.MULTILINE)
 
     auction = requests.get(auction_url)
     if (auction.status_code != 200):
@@ -159,7 +160,12 @@ def doAuction2(auction_url, outputFile):
                 if ("Provenance" in parser.section_data.keys()):
                     f.write("<h3>Provenance</h3>\n")
                     f.write("<p>" + parser.section_data['Provenance'] + "</p>\n")
+
+                process_images(f, imgExpr, lotData.text)
+                f.write('<hr>\n')
+
         f.close()
 
+grabOnlineAuction("https://onlineonly.christies.com/s/firsts-history-computing-paul-g-allen-collection/lots/3726?COSID=&cid=sh_hub&bid=", "AllenStuff1.html")
+grabLiveAuction("https://www.christies.com/en/auction/pushing-boundaries-ingenuity-from-the-paul-g-allen-collection-30730/browse-lots", "AllenStuff2.html")
 
-# doAuction2("https://www.christies.com/en/auction/pushing-boundaries-ingenuity-from-the-paul-g-allen-collection-30730/browse-lots", "AllenStuff2.html")
