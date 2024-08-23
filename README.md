@@ -3,7 +3,7 @@
 
 In August 2024, the Christies auction house [posted auctions of Paul Allen's collection](https://www.christies.com/en/stories/gen-one-innovations-from-the-paul-g-allen-collection-1f0df60a726e4dcbabef3a91a57ef7ee)
 of technology, history and science fiction memorabila. Along with the listings
-are great, high-res color photos of his collection.
+are great high-res color photos of his collection.
 
 Many of the items in this collection were displayed at the Living Computer Museum in Seattle,
 which shut down for good in 2020. As [Jason Scott explains](https://ascii.textfiles.com/archives/5672), the LCM wasn't really
