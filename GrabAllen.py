@@ -115,6 +115,7 @@ class ChristieParser( HTMLParser ):
         if is_tag_combo('span', 'class', 'chr-lot-section__accordion--text'):
             self.in_span = True
 
+        # Also grab the formatting tags in the sections we keep.
         if (tag in ['br', 'b', 'i', 'p'] and self.in_section):
             self.section_data[self.in_section] += "<" + tag + ">"
 
