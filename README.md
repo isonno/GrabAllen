@@ -15,7 +15,9 @@ hence its eventual closure and the auction of the major artifacts it displayed.
 Now, Christie's is no more a "museum" than the LCM was, and the excellent photos they
 took for the auction are irrelevant to them once the sales commission checks are cashed. Hence
 this script to grab the photos before they go away. **Note:** Before running this script, edit
-the line near the top calling `os.chdir` to specify where you want the files downloaded to.
+the line near the top calling `os.chdir` to specify where you want the files downloaded to. 
+An archive of the images from the auctions as well as HTML files containing summary descriptions
+of the auction lots is [posted on the Internet Archive](https://archive.org/details/PaulAllenCollectionPhotos).
 
 Would this script work for other Christies auction listings? Maybe? Could Christies get upset
 and make grabbing this info much harder by applying DRM or encription? Certainly. The code is a
