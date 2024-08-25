@@ -17,7 +17,7 @@ took for the auction are irrelevant to them once the sales commission checks are
 this script to grab the photos before they go away. **Note:** Before running this script, edit
 the line near the top calling `os.chdir` to specify where you want the files downloaded to.
 
-An archive of the images from the August 20204 Paul Allen auctions as well as HTML files containing summary descriptions
+An archive of the images from the August 2024 Paul Allen auctions as well as HTML files containing summary descriptions
 of the auction lots is [posted on the Internet Archive](https://archive.org/details/PaulAllenCollectionPhotos).
 
 Would this script work for other Christies auction listings? Maybe? Could Christies get upset
