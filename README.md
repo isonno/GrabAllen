@@ -19,6 +19,8 @@ the line near the top calling `os.chdir` to specify where you want the files dow
 
 An archive of the images from the August 2024 Paul Allen auctions as well as HTML files containing summary descriptions
 of the auction lots is [posted on the Internet Archive](https://archive.org/details/PaulAllenCollectionPhotos).
+A [video tour](https://www.youtube.com/watch?v=OohnXELGQ74) of the collection still at the LCM in Seattle in
+August 2024 by Dave Plummer is available on YouTube.
 
 Would this script work for other Christies auction listings? Maybe? Could Christies get upset
 and make grabbing this info much harder by applying DRM or encription? Certainly. The code is a
