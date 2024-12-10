@@ -23,7 +23,7 @@ A [video tour](https://www.youtube.com/watch?v=OohnXELGQ74) of the collection st
 August 2024 by Dave Plummer is available on YouTube.
 
 Would this script work for other Christies auction listings? Maybe? Could Christies get upset
-and make grabbing this info much harder by applying DRM or encription? Certainly. The code is a
+and make grabbing this info much harder by applying DRM or encryption? Certainly. The code is a
 bit messy, because Christies posts lots in two different formats.
 
 **This is posted as-is, no warranty, no offer of support.** Once I've grabbed the data, I'm
