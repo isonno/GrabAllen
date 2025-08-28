@@ -1,6 +1,6 @@
 # Grab the contents of the Paul Allen Auctions at Christies, August 2024
 # Requires the requests package, which is not standard ("pip install requests")
-# J. Peterson 2024-08-14
+# J. Peterson 14-aug-2024
 
 import requests, re, os
 from html.parser import HTMLParser
